@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../streamlit学习/.idea/streamlit学习.iml" filepath="$PROJECT_DIR$/../streamlit学习/.idea/streamlit学习.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/视频脚本一键生成器.iml" filepath="$PROJECT_DIR$/.idea/视频脚本一键生成器.iml" />
+    </modules>
+  </component>
+</project>
