@@ -5,7 +5,7 @@ st.title("🎬 视频脚本生成器")
 
 with st.sidebar:
     openai_api_key = st.text_input("请输入OpenAI API秘钥", type="password")
-    st.markdown("[获取秘钥](https://api.aigc369.com/register)")
+    st.markdown("[若无秘钥，请点此获取](https://api.aigc369.com/register)")
 
 st.divider()
 
