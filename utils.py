@@ -4,7 +4,6 @@ from prompt_template import system_template_text
 from prompt_template import user_template_text
 from langchain.output_parsers import PydanticOutputParser
 from xiaohongshu_model import Xiaohongshu
-import textwrap
 
 
 # from langchain_community.utilities import wikipediaAPIWrapper
@@ -67,6 +66,17 @@ def generate_script(subject, video_length,
 # print(wrapped_script)
 
 def generate_xiaohongshu(theme, openai_api_key):
+    """
+    使用GPT-3.5 Turbo模型生成小红书内容。
+
+    参数:
+    - theme: 小红书的主题
+
+    返回:
+    - Xiaohongshu: 根据主题生成的小红书内容模型对象
+    """
+
+    # 定义ChatPromptTemplate和ChatOpenAI
     prompt = ChatPromptTemplate.from_messages([
         ("system", system_template_text),
         ("user", user_template_text)
@@ -75,6 +85,8 @@ def generate_xiaohongshu(theme, openai_api_key):
                       openai_api_key=openai_api_key,
                       openai_api_base="https://api.aigc369.com/v1")
     output_parser = PydanticOutputParser(pydantic_object=Xiaohongshu)
+
+    # 构建链式调用并发起请求
     chain = prompt | mode | output_parser
     result = chain.invoke({
         "parser_instructions": output_parser.get_format_instructions(),
