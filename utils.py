@@ -1,6 +1,12 @@
 from langchain.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
+from prompt_template import system_template_text
+from prompt_template import user_template_text
+from langchain.output_parsers import PydanticOutputParser
+from xiaohongshu_model import Xiaohongshu
 import textwrap
+
+
 # from langchain_community.utilities import wikipediaAPIWrapper
 
 
@@ -49,6 +55,7 @@ def generate_script(subject, video_length,
 
     return script, title
 
+
 #
 # script, title = generate_script("说点什么好呢", 5, 0.5, "sk-cEEMuWBgiFCWokdv6e828850D186460dAbBf0fCf367fE4C1")
 #
@@ -58,3 +65,22 @@ def generate_script(subject, video_length,
 # print("Title:", title)
 # print("\nScript:")
 # print(wrapped_script)
+
+def generate_xiaohongshu(theme, openai_api_key):
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", system_template_text),
+        ("user", user_template_text)
+    ])
+    mode = ChatOpenAI(model_name="gpt-3.5-turbo",
+                      openai_api_key=openai_api_key,
+                      openai_api_base="https://api.aigc369.com/v1")
+    output_parser = PydanticOutputParser(pydantic_object=Xiaohongshu)
+    chain = prompt | mode | output_parser
+    result = chain.invoke({
+        "parser_instructions": output_parser.get_format_instructions(),
+        "theme": theme})
+    return result
+
+
+# print(generate_xiaohongshu("说点什么好呢",
+#                            "sk-cEEMuWBgiFCWokdv6e828850D186460dAbBf0fCf367fE4C1"))

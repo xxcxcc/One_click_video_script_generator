@@ -1,5 +1,5 @@
 import streamlit as st
-from utils import generate_script
+from utils import generate_script, generate_xiaohongshu
 
 st.title("🎬 视频脚本生成器")
 
@@ -9,7 +9,7 @@ with st.sidebar:
 
 st.divider()
 
-subject = st.text_input("💡 请输入主题")
+subject = st.text_input("💡 请输入视频脚本主题")
 
 st.divider()
 
@@ -23,8 +23,8 @@ creativity = st.slider("✨ 请选择创意程度", min_value=0.0, max_value=1.0
 
 st.divider()
 
-button = st.button("🚀 生成脚本")
-if button:
+button_script = st.button("🚀 生成脚本", key='key_1')
+if button_script:
     if not openai_api_key:
         st.error("请输入OpenAI API秘钥")
         st.stop()
@@ -40,3 +40,41 @@ if button:
             st.subheader("💡 视频脚本：")
             st.write(title)
             st.success("✅ 脚本生成成功")
+
+st.divider()
+
+st.header("✨ 爆款小红书AI写作助手")
+
+st.divider()
+
+theme = st.text_input("💡 请输入小红书文案主题")
+
+st.divider()
+
+button_xiaohongshu = st.button("🚀 生成文案", key='key_2')
+if button_xiaohongshu:
+    if not openai_api_key:
+        st.error("请输入OpenAI API秘钥")
+        st.stop()
+    if not theme:
+        st.error("请输入主题")
+        st.stop()
+    else:
+        with st.spinner("⏳ 正在生成文案..."):
+            result = generate_xiaohongshu(theme, openai_api_key)
+            left_column, right_column = st.columns(2)
+            with left_column:
+                st.markdown("##### 小红书标题1")
+                st.write(result.titles[0])
+                st.markdown("##### 小红书标题2")
+                st.write(result.titles[1])
+                st.markdown("##### 小红书标题3")
+                st.write(result.titles[2])
+                st.markdown("##### 小红书标题4")
+                st.write(result.titles[3])
+                st.markdown("##### 小红书标题5")
+                st.write(result.titles[4])
+            with right_column:
+                st.markdown("##### 小红书内容正文")
+                st.write(result.content)
+            st.success("✅ 文案生成成功")
