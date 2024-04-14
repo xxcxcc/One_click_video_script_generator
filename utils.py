@@ -4,6 +4,8 @@ from prompt_template import system_template_text
 from prompt_template import user_template_text
 from langchain.output_parsers import PydanticOutputParser
 from xiaohongshu_model import Xiaohongshu
+from langchain.chains import ConversationChain
+from langchain.memory import ConversationBufferMemory
 
 
 # from langchain_community.utilities import wikipediaAPIWrapper
@@ -96,3 +98,17 @@ def generate_xiaohongshu(theme, openai_api_key):
 
 # print(generate_xiaohongshu("说点什么好呢",
 #                            "sk-cEEMuWBgiFCWokdv6e828850D186460dAbBf0fCf367fE4C1"))
+
+def chat_with_gpt(prompt, memory, openai_api_key):
+    model = ChatOpenAI(model_name="gpt-3.5-turbo",
+                       openai_api_key=openai_api_key,
+                       openai_api_base="https://api.aigc369.com/v1")
+    chain = ConversationChain(llm=model, memory=memory)
+
+    response = chain.invoke({"input": prompt})
+    return response["response"]
+
+
+# memory = ConversationBufferMemory(return_messages=True)
+# print(chat_with_gpt("你好", memory, "sk-cEEMuWBgiFCWokdv6e828850D186460dAbBf0fCf367fE4C1"))
+# print(chat_with_gpt("我刚刚说什么了", memory, "sk-cEEMuWBgiFCWokdv6e828850D186460dAbBf0fCf367fE4C1"))
