@@ -1,11 +1,10 @@
 from langchain.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
-from prompt_template import system_template_text
-from prompt_template import user_template_text
+from xiaohongshu_prompt_template import system_template_text
+from xiaohongshu_prompt_template import user_template_text
 from langchain.output_parsers import PydanticOutputParser
 from xiaohongshu_model import Xiaohongshu
 from langchain.chains import ConversationChain
-from langchain.memory import ConversationBufferMemory
 
 
 # from langchain_community.utilities import wikipediaAPIWrapper
